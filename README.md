@@ -1,5 +1,6 @@
 # Multi-Tool Autonomous AI Agent
 
+[![CI Pipeline](https://github.com/Pradeepkaman/Multi-Tool-AI-Agent-/actions/workflows/ci.yml/badge.svg)](https://github.com/Pradeepkaman/Multi-Tool-AI-Agent-/actions)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![LangChain](https://img.shields.io/badge/LangChain-Core-green.svg)](https://www.langchain.com/)
 [![DuckDuckGo](https://img.shields.io/badge/Search-DuckDuckGo-orange.svg)](https://duckduckgo.com/)
