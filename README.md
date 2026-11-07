@@ -109,8 +109,20 @@ GEMINI_MODEL=gemini-2.5-flash
 
 ## 💻 Usage
 
-### 1. Interactive Console Mode
-Launch the interactive REPL:
+### 1. Professional Web UI (Bootstrap 5 & Google Material Design)
+Launch the modern browser interface with interactive tool cards and real-time ReAct timeline:
+```bash
+python src/web_app.py
+```
+Then open **`http://127.0.0.1:5000`** in your browser.
+*(Or double-click `run.bat` and select `[1]`)*
+
+- **Three-Color System**: Strictly designed with Google Material Blue (`#1A73E8`), Pure Surface White (`#FFFFFF`), and Deep Slate Navy (`#1E293B`).
+- **Interactive Tool Drawer**: Test individual tools directly (DuckDuckGo, Calculator, Local File Reader) in interactive modal playgrounds.
+- **Simulation Mode Switch**: Toggle between Live LLM and Offline Mock Mode instantly.
+
+### 2. Interactive Console Mode (CLI REPL)
+Launch the terminal REPL:
 ```bash
 python src/main.py
 ```

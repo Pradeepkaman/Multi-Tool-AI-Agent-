@@ -162,3 +162,105 @@ class AutonomousAgent:
         self._log_final_answer(fallback_msg)
         return fallback_msg
 
+    def run_with_trace(self, query: str) -> Dict[str, Any]:
+        """Executes the agent loop on a user query and captures a structured trace of all steps.
+
+        Returns:
+            Dict containing query, final_answer, and list of reasoning steps.
+        """
+        messages: List[BaseMessage] = [
+            SystemMessage(content=SYSTEM_PROMPT),
+            HumanMessage(content=query),
+        ]
+
+        iteration = 0
+        final_answer = ""
+        trace_steps: List[Dict[str, Any]] = []
+
+        while iteration < self.max_iterations:
+            iteration += 1
+
+            # Invoke model with tools
+            response = self.model_with_tools.invoke(messages)
+            messages.append(response)
+
+            content = response.content
+            if isinstance(content, list):
+                text_blocks = [c.get("text", "") for c in content if isinstance(c, dict) and "text" in c]
+                thought_text = "\n".join(text_blocks).strip()
+            else:
+                thought_text = str(content).strip() if content else ""
+
+            tool_calls = getattr(response, "tool_calls", []) or []
+
+            if thought_text and tool_calls:
+                trace_steps.append({
+                    "step": iteration,
+                    "type": "thought",
+                    "content": thought_text
+                })
+
+            if not tool_calls:
+                final_answer = thought_text or "No response generated."
+                trace_steps.append({
+                    "step": iteration,
+                    "type": "final_answer",
+                    "content": final_answer
+                })
+                return {
+                    "query": query,
+                    "final_answer": final_answer,
+                    "steps": trace_steps,
+                    "iterations": iteration
+                }
+
+            # Process tool calls
+            for tc in tool_calls:
+                tool_name = tc.get("name")
+                tool_args = tc.get("args", {})
+                call_id = tc.get("id")
+
+                trace_steps.append({
+                    "step": iteration,
+                    "type": "action",
+                    "tool": tool_name,
+                    "args": tool_args
+                })
+
+                if tool_name in self.tools_map:
+                    target_tool = self.tools_map[tool_name]
+                    try:
+                        observation = target_tool.invoke(tool_args)
+                        observation_str = str(observation)
+                    except Exception as err:
+                        observation_str = f"Error executing tool '{tool_name}': {str(err)}"
+                else:
+                    observation_str = f"Error: Tool '{tool_name}' not recognized."
+
+                trace_steps.append({
+                    "step": iteration,
+                    "type": "observation",
+                    "tool": tool_name,
+                    "content": observation_str
+                })
+
+                messages.append(
+                    ToolMessage(
+                        content=observation_str,
+                        tool_call_id=call_id or f"call_{iteration}",
+                    )
+                )
+
+        fallback_msg = f"Agent reached maximum iterations ({self.max_iterations}) without concluding."
+        trace_steps.append({
+            "step": iteration,
+            "type": "final_answer",
+            "content": fallback_msg
+        })
+        return {
+            "query": query,
+            "final_answer": fallback_msg,
+            "steps": trace_steps,
+            "iterations": iteration
+        }
+
