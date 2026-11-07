@@ -33,3 +33,4 @@ jobs:
     - name: Run Agent ReAct Compound Loop Integration Test
       run: |
         python tests/test_agent_flow.py
+
