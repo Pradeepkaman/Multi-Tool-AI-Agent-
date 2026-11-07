@@ -73,8 +73,8 @@ Multi-tool agent/
 
 ### 1. Clone & Navigate to Repository
 ```bash
-git clone <your-repo-url>
-cd "Multi-tool agent"
+git clone https://github.com/Pradeepkaman/Multi-Tool-AI-Agent-.git
+cd Multi-Tool-AI-Agent-
 ```
 
 ### 2. Set Up Virtual Environment (Recommended)
