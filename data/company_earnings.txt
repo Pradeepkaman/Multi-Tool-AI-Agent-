@@ -1,0 +1,17 @@
+Acme Corp - FY2024 Financial Performance Summary
+=================================================
+Reporting Period: Q1 - Q4 2024
+Currency: USD
+
+Quarterly Revenue:
+- Q1 2024: $12,500,000
+- Q2 2024: $14,200,000
+- Q3 2024: $15,800,000
+- Q4 2024: $18,500,000
+
+Total Operating Expenses (Annual): $42,600,000
+Research & Development Spend: $8,400,000
+
+Notes:
+- The corporate tax rate applied to net income is 21%.
+- Year-over-year revenue in FY2023 was $48,000,000.
