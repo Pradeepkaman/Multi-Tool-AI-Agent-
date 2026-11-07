@@ -59,3 +59,4 @@ def file_reader_tool(file_path: str) -> str:
     Input must be a valid relative or absolute file path string like 'data/company_notes.txt' or 'README.md'.
     """
     return read_file_content(file_path)
+

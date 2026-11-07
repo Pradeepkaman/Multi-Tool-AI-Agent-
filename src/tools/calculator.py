@@ -89,3 +89,4 @@ def calculator_tool(expression: str) -> str:
     Input should be a mathematical expression string like '500 * (1 + 0.08) ** 5' or '(450 - 300) / 300 * 100'.
     """
     return safe_calculate(expression)
+

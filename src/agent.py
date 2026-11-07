@@ -161,3 +161,4 @@ class AutonomousAgent:
         fallback_msg = f"Agent reached maximum iterations ({self.max_iterations}) without concluding."
         self._log_final_answer(fallback_msg)
         return fallback_msg
+
